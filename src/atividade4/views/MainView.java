@@ -4,6 +4,8 @@
  */
 package atividade4.views;
 
+import atividade4.logica.Formulario;
+
 /**
  *
  * @author ma_fe
@@ -28,11 +30,11 @@ public class MainView extends javax.swing.JFrame {
 
         PainelPrincipal = new javax.swing.JLayeredPane();
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jLabel1 = new javax.swing.JLabel();
+        dataLbl = new javax.swing.JLabel();
         dataTF = new javax.swing.JFormattedTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        horaLbl = new javax.swing.JLabel();
+        pressDiasLbl = new javax.swing.JLabel();
+        pressSistLbl = new javax.swing.JLabel();
         horaTF = new javax.swing.JFormattedTextField();
         presSistTF = new javax.swing.JTextField();
         presDiasTF = new javax.swing.JTextField();
@@ -50,25 +52,25 @@ public class MainView extends javax.swing.JFrame {
 
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true), "Formulário de pressão", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 16))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel1.setLabelFor(dataTF);
-        jLabel1.setText("Data:");
+        dataLbl.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        dataLbl.setLabelFor(dataTF);
+        dataLbl.setText("Data:");
 
         dataTF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         dataTF.setToolTipText("Ex. data: 23/03/2023");
         dataTF.setNextFocusableComponent(horaTF);
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel2.setLabelFor(horaTF);
-        jLabel2.setText("Hora:");
+        horaLbl.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        horaLbl.setLabelFor(horaTF);
+        horaLbl.setText("Hora:");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel3.setLabelFor(presDiasTF);
-        jLabel3.setText("Pressão diastólica:");
+        pressDiasLbl.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        pressDiasLbl.setLabelFor(presDiasTF);
+        pressDiasLbl.setText("Pressão diastólica:");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel4.setLabelFor(presSistTF);
-        jLabel4.setText("Pressão sistólica:");
+        pressSistLbl.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        pressSistLbl.setLabelFor(presSistTF);
+        pressSistLbl.setText("Pressão sistólica:");
 
         horaTF.setToolTipText("Ex. hora: 18:53");
         horaTF.setNextFocusableComponent(presSistTF);
@@ -85,11 +87,6 @@ public class MainView extends javax.swing.JFrame {
         estressCB.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         estressCB.setText("Sim, estava em situação de estresse.");
         estressCB.setNextFocusableComponent(clearBtn);
-        estressCB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estressCBActionPerformed(evt);
-            }
-        });
 
         jLayeredPane3.setLayer(estressCB, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -117,16 +114,26 @@ public class MainView extends javax.swing.JFrame {
         registrarBtn.setText("Registrar");
         registrarBtn.setToolTipText("Adicionar registro de pressão");
         registrarBtn.setNextFocusableComponent(clearBtn);
+        registrarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarBtnActionPerformed(evt);
+            }
+        });
 
         clearBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         clearBtn.setText("Limpar formulario");
         clearBtn.setToolTipText("Limpar o formulário e começar novamente");
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnActionPerformed(evt);
+            }
+        });
 
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(dataLbl, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(dataTF, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(horaLbl, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(pressDiasLbl, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(pressSistLbl, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(horaTF, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(presSistTF, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(presDiasTF, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -150,10 +157,10 @@ public class MainView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
+                                .addComponent(horaLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                                .addComponent(dataLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(pressSistLbl)
+                            .addComponent(pressDiasLbl))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(presDiasTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -170,19 +177,19 @@ public class MainView extends javax.swing.JFrame {
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dataLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dataTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(horaLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(horaTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pressSistLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(presSistTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pressDiasLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(presDiasTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -203,15 +210,26 @@ public class MainView extends javax.swing.JFrame {
         jLayeredPane2.setBackground(new java.awt.Color(102, 102, 102));
         jLayeredPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true), "Histórico de registros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 16))); // NOI18N
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {"06/09/2023", "12:33", "79", "129", "Não"}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Data", "Hora", "Pres. Sistó.", "Pres. Diast.", "Sit. Estresse"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTable1.setRowHeight(30);
+        jTable1.setSelectionBackground(new java.awt.Color(102, 153, 255));
         jScrollPane1.setViewportView(jTable1);
         jTable1.getAccessibleContext().setAccessibleName("tabela de histórico");
         jTable1.getAccessibleContext().setAccessibleDescription("Tabela com os registros anteriores de pressão");
@@ -294,55 +312,40 @@ public class MainView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void estressCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estressCBActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_estressCBActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainView().setVisible(true);
-            }
-        });
+    
+    private void limparFormulario(){
+        dataTF.setText("");
+        horaTF.setText("");
+        presDiasTF.setText("");
+        presSistTF.setText("");
+        estressCB.setSelected(false);
+        
+        dataTF.requestFocus();
     }
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        limparFormulario();
+    }//GEN-LAST:event_clearBtnActionPerformed
+
+    private void registrarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarBtnActionPerformed
+        String data = dataTF.getText();
+        String hora = horaTF.getText();
+        String pressD = presDiasTF.getText();
+        String pressS = presSistTF.getText();
+        boolean estresse = estressCB.isSelected();
+        
+        // TODO criar classe de formulário
+        Formulario f = new Formulario(data, hora, pressS, pressD, estresse);
+    }//GEN-LAST:event_registrarBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane PainelPrincipal;
     private javax.swing.JButton clearBtn;
+    private javax.swing.JLabel dataLbl;
     private javax.swing.JFormattedTextField dataTF;
     private javax.swing.JCheckBox estressCB;
+    private javax.swing.JLabel horaLbl;
     private javax.swing.JFormattedTextField horaTF;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JLayeredPane jLayeredPane3;
@@ -351,6 +354,8 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField presDiasTF;
     private javax.swing.JTextField presSistTF;
+    private javax.swing.JLabel pressDiasLbl;
+    private javax.swing.JLabel pressSistLbl;
     private javax.swing.JButton registrarBtn;
     // End of variables declaration//GEN-END:variables
 }
