@@ -42,6 +42,40 @@ public class Formulario {
         this.sistolica = Integer.parseInt(sistolica);
         this.diastolica = Integer.parseInt(diastolica);
         this.estresse = estresse;
-        System.out.println("Sucesso");
+    }
+
+    public String getDataStr() {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String data = this.data.format(format);
+        return data;
+    }
+    
+    public String isEstresseStr(){
+        if (estresse){
+            return "Sim";
+        }
+        else {
+            return "Não";
+        }
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+    
+    public LocalTime getHora() {
+        return hora;
+    }
+
+    public int getSistolica() {
+        return sistolica;
+    }
+
+    public int getDiastolica() {
+        return diastolica;
+    }
+
+    public boolean isEstresse() {
+        return estresse;
     }
 }

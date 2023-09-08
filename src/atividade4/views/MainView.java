@@ -5,6 +5,7 @@
 package atividade4.views;
 
 import atividade4.logica.Formulario;
+import atividade4.logica.FormularioCSV;
 
 /**
  *
@@ -322,11 +323,9 @@ public class MainView extends javax.swing.JFrame {
         
         dataTF.requestFocus();
     }
-    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
-        limparFormulario();
-    }//GEN-LAST:event_clearBtnActionPerformed
+    
 
-    private void registrarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarBtnActionPerformed
+    private void registrarFormulario(){
         String data = dataTF.getText();
         String hora = horaTF.getText();
         String pressD = presDiasTF.getText();
@@ -335,6 +334,17 @@ public class MainView extends javax.swing.JFrame {
         
         // TODO criar classe de formulário
         Formulario f = new Formulario(data, hora, pressS, pressD, estresse);
+        
+        FormularioCSV.addFormulario(f);
+    }
+    
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        limparFormulario();
+    }//GEN-LAST:event_clearBtnActionPerformed
+    
+    private void registrarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarBtnActionPerformed
+        registrarFormulario();
+        limparFormulario();
     }//GEN-LAST:event_registrarBtnActionPerformed
 
 
