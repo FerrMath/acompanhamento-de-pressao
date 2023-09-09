@@ -7,6 +7,7 @@ package atividade4.views;
 import atividade4.erros.ErrorManeger;
 import atividade4.logica.Formulario;
 import atividade4.logica.FormularioCSV;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -22,6 +23,7 @@ public class MainView extends javax.swing.JFrame {
      */
     public MainView() {
         initComponents();
+        addAcessibility();
     }
 
     /**
@@ -322,6 +324,11 @@ public class MainView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void addAcessibility(){
+        registrarBtn.setMnemonic(KeyEvent.VK_ENTER);
+        clearBtn.setMnemonic(KeyEvent.VK_C);
+    }
     
     private void limparFormulario(){
         dataTF.setText("");
