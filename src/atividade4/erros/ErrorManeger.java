@@ -16,7 +16,7 @@ public class ErrorManeger {
     public static boolean temCampoVazio(String... campos){
         try {
             for (String campo: campos){
-                if (campo.isEmpty() || campo.isBlank() || campo == null){
+                if (campo.isEmpty() || campo.isBlank()){
                     throw new EmptyInputException();
                 }
             }

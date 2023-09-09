@@ -9,6 +9,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -405,7 +408,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="jTable1">
+                    <Component class="javax.swing.JTable" name="tabela">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="16" style="0"/>
@@ -413,16 +416,16 @@
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="5" rowCount="1">
                             <Column editable="false" title="Data" type="java.lang.Object">
-                              <Data value="06/09/2023"/>
+                              <Data value="23/09/2023"/>
                             </Column>
                             <Column editable="false" title="Hora" type="java.lang.Object">
-                              <Data value="12:33"/>
+                              <Data value="23:14"/>
                             </Column>
                             <Column editable="false" title="Pres. Sist&#xf3;." type="java.lang.Object">
-                              <Data value="79"/>
+                              <Data value="85"/>
                             </Column>
                             <Column editable="false" title="Pres. Diast." type="java.lang.Object">
-                              <Data value="129"/>
+                              <Data value="123"/>
                             </Column>
                             <Column editable="false" title="Sit. Estresse" type="java.lang.Object">
                               <Data value="N&#xe3;o"/>
