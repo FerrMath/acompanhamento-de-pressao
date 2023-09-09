@@ -4,7 +4,13 @@
  */
 package atividade4.views;
 
+import atividade4.erros.ErrorManeger;
 import atividade4.logica.Formulario;
+import atividade4.logica.FormularioCSV;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,6 +23,7 @@ public class MainView extends javax.swing.JFrame {
      */
     public MainView() {
         initComponents();
+        addAcessibility();
     }
 
     /**
@@ -45,10 +52,15 @@ public class MainView extends javax.swing.JFrame {
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Registro de pressão");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true), "Formulário de pressão", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 16))); // NOI18N
 
@@ -210,10 +222,10 @@ public class MainView extends javax.swing.JFrame {
         jLayeredPane2.setBackground(new java.awt.Color(102, 102, 102));
         jLayeredPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true), "Histórico de registros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 16))); // NOI18N
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"06/09/2023", "12:33", "79", "129", "Não"}
+                {"23/09/2023", "23:14", "85", "123", "Não"}
             },
             new String [] {
                 "Data", "Hora", "Pres. Sistó.", "Pres. Diast.", "Sit. Estresse"
@@ -227,12 +239,12 @@ public class MainView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jTable1.setRowHeight(30);
-        jTable1.setSelectionBackground(new java.awt.Color(102, 153, 255));
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getAccessibleContext().setAccessibleName("tabela de histórico");
-        jTable1.getAccessibleContext().setAccessibleDescription("Tabela com os registros anteriores de pressão");
+        tabela.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tabela.setRowHeight(30);
+        tabela.setSelectionBackground(new java.awt.Color(102, 153, 255));
+        jScrollPane1.setViewportView(tabela);
+        tabela.getAccessibleContext().setAccessibleName("tabela de histórico");
+        tabela.getAccessibleContext().setAccessibleDescription("Tabela com os registros anteriores de pressão");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -313,6 +325,11 @@ public class MainView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
+    private void addAcessibility(){
+        registrarBtn.setMnemonic(KeyEvent.VK_ENTER);
+        clearBtn.setMnemonic(KeyEvent.VK_C);
+    }
+    
     private void limparFormulario(){
         dataTF.setText("");
         horaTF.setText("");
@@ -322,20 +339,61 @@ public class MainView extends javax.swing.JFrame {
         
         dataTF.requestFocus();
     }
+    
+
+    private boolean registrarFormulario(){
+        // Pega os dados dos campos de texto do formulario
+        String data = dataTF.getText();
+        String hora = horaTF.getText();
+        String pressS = presSistTF.getText();
+        String pressD = presDiasTF.getText();
+        boolean estresse = estressCB.isSelected();
+        
+        // Verifica se os dados são aceitaveis
+        if (ErrorManeger.temCampoVazio(data,hora,pressS,pressD)) return false;
+        else if (ErrorManeger.temFormatoDeDataInvalido(data)) return false;
+        else if (ErrorManeger.temFormatoDeHoraInvalido(hora)) return false;
+        else if (ErrorManeger.temCampoIntInvalido(pressS, pressD)) return false;
+        
+        // Gera uma instacia de formulario e os dados são adicionados ao CSV
+        Formulario f = new Formulario(data, hora, pressS, pressD, estresse);
+        FormularioCSV.addFormulario(f);
+        return true;
+    }
+    
+    private void atualizarTabela(){
+        DefaultTableModel model = (DefaultTableModel) tabela.getModel();
+        
+        // Limpa a tabela atual
+        for (int row=0; row < tabela.getRowCount(); row++){
+            model.removeRow(row);
+        }
+        
+        ArrayList<Formulario> formularios = FormularioCSV.readFormularios();
+        
+        // Coloca os dados atualizados na tabela com a ultima inclusão no topo
+        for (Formulario f:formularios){
+            model.insertRow(0, f.getDados());
+        }
+    }
+    
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         limparFormulario();
     }//GEN-LAST:event_clearBtnActionPerformed
-
+    
     private void registrarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarBtnActionPerformed
-        String data = dataTF.getText();
-        String hora = horaTF.getText();
-        String pressD = presDiasTF.getText();
-        String pressS = presSistTF.getText();
-        boolean estresse = estressCB.isSelected();
+        // Tenta registrar o formulario
+        if(!registrarFormulario()) return;
+        JOptionPane.showMessageDialog(this, "Registro realizado com sucesso!");
         
-        // TODO criar classe de formulário
-        Formulario f = new Formulario(data, hora, pressS, pressD, estresse);
+        // Se tiver sucesso, limpa os campos de texto e atualiza a tabela
+        limparFormulario();
+        atualizarTabela();
     }//GEN-LAST:event_registrarBtnActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        atualizarTabela();
+    }//GEN-LAST:event_formWindowOpened
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -351,11 +409,11 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField presDiasTF;
     private javax.swing.JTextField presSistTF;
     private javax.swing.JLabel pressDiasLbl;
     private javax.swing.JLabel pressSistLbl;
     private javax.swing.JButton registrarBtn;
+    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }
